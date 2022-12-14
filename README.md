@@ -2,8 +2,7 @@
 
 ## More info in Github.Actions: [![statusbadge](../../actions/workflows/buildtest.yml/badge.svg?branch=main&event=pull_request)](../../actions/workflows/buildtest.yml)
         
-        
-### Compile complited (build log, can be empty):
+### Compile failed (build log):
 ```
 /home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:32: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
         cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
@@ -49,12 +48,6 @@
                (                                                               )
 6 warnings generated.
 
-```
-
-### Output:
-```
-[ERROR] Error: Could not open elf file
- Stdout and stderr must be empty
 ```
 
 ### Test output:
