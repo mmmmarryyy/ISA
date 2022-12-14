@@ -447,7 +447,7 @@ struct B_type {
         
         cnst12 = command;
 
-        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+        cnst = ((((((cnst12 << 1) + cnst11) << 6) + cnst10_5) << 4) + cnst4_1) << 1;
         cnst -= (cnst >> 12) * (2 << 12);
 
     }
@@ -505,7 +505,7 @@ struct J_type {
 
         cnst_20 = command;
 
-        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+        cnst = ((((((cnst_20 << 8) + cnst_19_12) << 1) + cnst_11) << 10) + cnst_10_1) << 1;
         cnst -= (cnst >> 20) * (2 << 20);
     }
 };
