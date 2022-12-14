@@ -669,7 +669,7 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
 
     if (!(elf_header.e_ident[1] == 'E' && elf_header.e_ident[2] == 'L' && elf_header.e_ident[3] == 'F')) {
         std::cerr <<"Error: Wrong file format\n";
-        exit(0);
+        return 1;
     }
     
     //TODO: добавить еще несколько проверок (на 32-битность, на RISC_V)
@@ -775,13 +775,13 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
 
 //TODO: привести main в нормальное состояние из дебажного
 
-//int main(int argc, char const* argv[]) {
-int main() {
-    //const char* fin_name = argv[1];
-    //const char* fout_name = argv[2];
+int main(int argc, char const* argv[]) {
+//int main() {
+    const char* fin_name = argv[1];
+    const char* fout_name = argv[2];
 
-    const std::string fin_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/test_elf";
-    const std::string fout_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/output.txt";
+    //const std::string fin_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/test_elf";
+    //const std::string fout_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/output.txt";
 
     std::ifstream fin;
     fin.open(fin_name, std::ios::binary);
