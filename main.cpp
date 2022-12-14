@@ -106,7 +106,7 @@ int parse_symtab(std::ifstream& elf_file, section_header symtab_section_header, 
         elf_symbol elem;
 
         if (!elf_file.read((char*)&elem, symtab_section_header.sh_entsize).good()) {
-            std::cerr <<"Error: Could not read symbol in symtab" << std::endl;
+            //std::cerr <<"Error: Could not read symbol in symtab" << std::endl;
             return 1;
         }
 
@@ -194,7 +194,7 @@ int get_names_of_symbols(std::vector<elf_symbol> &symtab, std::ifstream& elf_fil
         char char_buffer = ' ';
         while (char_buffer != '\0') {
             if (!elf_file.read((char *) &char_buffer, 1).good()) {
-                std::cerr <<"Error: Could not read name of symbol" << i << std::endl;
+                //std::cerr <<"Error: Could not read name of symbol" << i << std::endl;
                 return 1;
             }
             if (char_buffer != '\0') {
@@ -527,7 +527,7 @@ int parse_and_write_text_or_disassembler(std::vector<elf_symbol> &symtab, std::i
         elf_file.seekg(text.sh_offset + i * 4, std::ios::beg);
         
         if (!elf_file.read((char *) &command, sizeof(command)).good()) {
-            std::cerr <<"Error: Could not read command" << std::endl;
+            //std::cerr <<"Error: Could not read command" << std::endl;
             return 1;
         }
 
@@ -663,16 +663,29 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     elf_file_header elf_header;
 
     if (!elf_file.read((char*)&elf_header, sizeof(elf_header)).good()) {
-        std::cerr <<"Error: Could not read e_ident" << std::endl;
+        //std::cerr <<"Error: Could not read e_ident" << std::endl;
         return 1;
     }
 
     if (!(elf_header.e_ident[1] == 'E' && elf_header.e_ident[2] == 'L' && elf_header.e_ident[3] == 'F')) {
-        std::cerr <<"Error: Wrong file format\n";
+        //std::cerr <<"Error: Wrong file format (not elf file)\n";
         return 1;
     }
-    
-    //TODO: добавить еще несколько проверок (на 32-битность, на RISC_V)
+
+    if ((elf_header.e_ident[4] != 1)) {
+        //std::cerr <<"Error: Wrong file format (work only with ELFCLASS32)\n";
+        return 1;
+    }
+
+    if ((elf_header.e_ident[5] != 1)) {
+        //std::cerr <<"Error: Wrong file format (work only with ELFDATA2LSB (little endian))\n";
+        return 1;
+    }
+
+    if (elf_header.e_machine != 0xF3) {
+        //std::cerr <<"Error: Wrong file format (work only with EM_RISCV system)\n";
+        return 1;
+    }
 
     std::vector<section_header> section_headers;
 
@@ -682,7 +695,7 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
         section_header temp;
 
         if (!elf_file.read((char*)&temp, sizeof(section_header)).good()) {
-            std::cerr <<"Error: Could not read section header with number:" << i << std::endl;
+            //std::cerr <<"Error: Could not read section header with number:" << i << std::endl;
             return 1;
         }
 
@@ -705,7 +718,7 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
         char char_buffer = ' ';
         while (char_buffer != '\0') {
             if (!elf_file.read((char *) &char_buffer, 1).good()) {
-                std::cerr <<"Error: Could not read name of section header with number:" << i << std::endl;
+                //std::cerr <<"Error: Could not read name of section header with number:" << i << std::endl;
                 return 1;
             }
             if (char_buffer != '\0') {
@@ -723,17 +736,17 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     }
 
     if (index_of_symtab == -1) {
-        std::cerr <<"Error: Could not find symtab block" << std::endl;
+        //std::cerr <<"Error: Could not find symtab block" << std::endl;
         return 1;
     }
 
     if (index_of_text == -1) {
-        std::cerr <<"Error: Could not find text block" << std::endl;
+        //std::cerr <<"Error: Could not find text block" << std::endl;
         return 1;
     }
 
     if (index_of_strtab == -1) {
-        std::cerr <<"Error: Could not find strtab block" << std::endl;
+        //std::cerr <<"Error: Could not find strtab block" << std::endl;
         return 1;
     }
 
@@ -741,12 +754,12 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     fout.open(fout_name, std::ios::binary);
 
     if (!fout.is_open()) {
-        std::cerr <<"Error: Could not open output file" << std::endl;
+        //std::cerr <<"Error: Could not open output file" << std::endl;
         return 1;
     }
 
     if (parse_symtab(elf_file, section_headers[index_of_symtab], symtab)) {
-        std::cerr <<"Error: Could not parse symtab" << std::endl;
+        //std::cerr <<"Error: Could not parse symtab" << std::endl;
         return 1;
     }
 
@@ -754,17 +767,17 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     std::map<int, std::string> addresses_of_function_names;
 
     if (get_names_of_symbols(symtab, elf_file, section_headers[index_of_strtab].sh_offset, names_of_symbols, addresses_of_function_names)) {
-        std::cerr <<"Error: Could not get names of symbol" << std::endl;
+        //std::cerr <<"Error: Could not get names of symbol" << std::endl;
         return 1;
     }
 
     if (parse_and_write_text_or_disassembler(symtab, elf_file, fout, section_headers[index_of_text], addresses_of_function_names)) {
-        std::cerr <<"Error: Could not work with text" << std::endl;
+        //std::cerr <<"Error: Could not work with text" << std::endl;
         return 1;
     }
 
     if (write_symtab(symtab, elf_file, fout, names_of_symbols)) {
-        std::cerr <<"Error: Could not write symtab" << std::endl;
+        //std::cerr <<"Error: Could not write symtab" << std::endl;
         return 1;
     }
 
@@ -787,12 +800,12 @@ int main(int argc, char const* argv[]) {
     fin.open(fin_name, std::ios::binary);
 
     if (!fin.is_open()) {
-        std::cerr <<"Error: Could not open elf file" << std::endl;
+        //std::cerr <<"Error: Could not open elf file" << std::endl;
         return 0;
     }
 
     if (parse_elf_file(fin, fout_name) == 1) {
-        std::cerr <<"Error: Could not parse elf file" << std::endl;
+        //std::cerr <<"Error: Could not parse elf file" << std::endl;
         return 0;
     }
 
