@@ -4,7 +4,49 @@
         
 ### Compile failed (build log):
 ```
-clang: error: no input files
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:32: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+                 ~~~~~~~~~~~~~~^~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:32: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+                               ^
+                 (                     )
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:47: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:47: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+                                              ^
+                (                                       )
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:64: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:450:64: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst12 << 1) + cnst11 << 6) + cnst10_5 << 4) + cnst4_1 << 1;
+                                                               ^
+               (                                                        )
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:33: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+                 ~~~~~~~~~~~~~~~^~~~~~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:33: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+                                ^
+                 (                          )
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:52: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:52: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+                                                   ^
+                (                                           )
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:69: warning: operator '<<' has lower precedence than '+'; '+' will be evaluated first [-Wshift-op-parentheses]
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~ ~~
+/home/runner/work/spbsu-comp-arch22-lab3-mmmmarryyy/spbsu-comp-arch22-lab3-mmmmarryyy/main.cpp:508:69: note: place parentheses around the '+' expression to silence this warning
+        cnst = (((cnst_20 << 8) + cnst_19_12 << 1) + cnst_11 << 10) + cnst_10_1 << 1;
+                                                                    ^
+               (                                                               )
+6 warnings generated.
 
 ```
 
