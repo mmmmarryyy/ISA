@@ -5,8 +5,6 @@
 #include <stdarg.h>
 #include <map>
 
-//TODO: лучше куда-нибудь отдельно вынести как файлик с константами
-
 std::map <unsigned int, std::string> symbol_types = {
         {0,"NOTYPE"},
         {1,"OBJECT"},
@@ -711,8 +709,6 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     int index_of_text = -1;
     int index_of_strtab = -1;
 
-    std::vector<elf_symbol> symtab;
-
     int help_address = section_headers[elf_header.e_shstrndx].sh_offset;
 
     for (int i = 0; i < elf_header.e_shnum; i++) {
@@ -763,13 +759,14 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
         return 1;
     }
 
+    std::vector<std::string> names_of_symbols;
+    std::map<int, std::string> addresses_of_function_names;
+    std::vector<elf_symbol> symtab;
+
     if (parse_symtab(elf_file, section_headers[index_of_symtab], symtab)) {
         std::cerr <<"Error: Could not parse symtab" << std::endl;
         return 1;
     }
-
-    std::vector<std::string> names_of_symbols;
-    std::map<int, std::string> addresses_of_function_names;
 
     if (get_names_of_symbols(symtab, elf_file, section_headers[index_of_strtab].sh_offset, names_of_symbols, addresses_of_function_names)) {
         std::cerr <<"Error: Could not get names of symbol" << std::endl;
@@ -791,15 +788,9 @@ int parse_elf_file(std::ifstream& elf_file, std::string fout_name) {
     return 0;
 }
 
-//TODO: привести main в нормальное состояние из дебажного
-
 int main(int argc, char const* argv[]) {
-//int main() {
     const char* fin_name = argv[1];
     const char* fout_name = argv[2];
-
-    //const std::string fin_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/test_elf";
-    //const std::string fout_name ="/Users/maria.barkovskaya/Documents/университет/computure_architecture/lab3/output.txt";
 
     std::ifstream fin;
     fin.open(fin_name, std::ios::binary);
